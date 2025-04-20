@@ -1,18 +1,20 @@
-from fastapi import APIRouter, UploadFile, File
+from fastapi import APIRouter, UploadFile, File, Depends
 from fastapi.responses import JSONResponse
 from docx import Document
 from io import BytesIO
 
 from utils.change_encoding import change_encoding_csv_xlsx
 from exceptions.ServerException import ServerException
+from utils.check_size_file_dev import check_size_file_dev
 
 document_router = APIRouter(
     prefix="/document"
 )
-
 @document_router.post("")
 @document_router.post("/")
-async def get_document(document: UploadFile = File(...)):
+async def get_document(
+    document: UploadFile = File(...),
+    file_check: UploadFile = Depends(check_size_file_dev)):
     """
     Обрабатывает загруженный документ (.docx, .txt, .csv, .xlsx) и возвращает его содержимое в виде JSON-ответа.
 
