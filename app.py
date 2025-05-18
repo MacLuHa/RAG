@@ -11,9 +11,9 @@ import uvicorn
 
 load_dotenv()
 
-API_KEY = os.getenv("API_KEY", None)
+API_KEY_LLM = os.getenv("API_KEY_LLM", None)
 
-if not API_KEY:
+if not API_KEY_LLM:
     raise HTTPException(
         status_code=402,
         detail="Not set api key"
